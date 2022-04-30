@@ -2,7 +2,9 @@ package digifarmfoodservice.web;
 
 import digifarmfoodservice.dto.FoodRequestDto;
 import digifarmfoodservice.dto.FoodResponseDto;
+import digifarmfoodservice.entities.User;
 import digifarmfoodservice.services.FoodService;
+import digifarmfoodservice.services.UserService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class FoodController
 {
     private FoodService foodService;
+    private UserService userService;
 
 
-    public FoodController(FoodService foodService)
+    public FoodController(FoodService foodService, UserService userService)
     {
         this.foodService = foodService;
+        this.userService = userService;
     }
 
 
@@ -39,7 +43,7 @@ public class FoodController
 
 
     @GetMapping("/{id}")
-    public FoodResponseDto getFood(@PathVariable String id)
+    public FoodResponseDto getFood(@PathVariable Long id)
     {
         return foodService.getFood(id);
     }
@@ -48,13 +52,15 @@ public class FoodController
     @PostMapping("/on")
     public String foodOn()
     {
-        return foodService.foodOn();
+        User user = userService.getCurrentUser();
+        return foodService.foodOn(user);
     }
 
 
     @PostMapping("/off")
     public String foodOff()
     {
-        return foodService.foodOff();
+        User user = userService.getCurrentUser();
+        return foodService.foodOff(user);
     }
 }

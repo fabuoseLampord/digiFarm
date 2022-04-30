@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Water {
     @Id
-    private String id;
+    private Long id;
     private String name;
     private Date date;
 }

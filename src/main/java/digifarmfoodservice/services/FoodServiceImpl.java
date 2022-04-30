@@ -3,6 +3,7 @@ package digifarmfoodservice.services;
 import digifarmfoodservice.dto.FoodRequestDto;
 import digifarmfoodservice.dto.FoodResponseDto;
 import digifarmfoodservice.entities.Food;
+import digifarmfoodservice.entities.User;
 import digifarmfoodservice.mappers.FoodMapper;
 import digifarmfoodservice.repositories.FoodRepository;
 import java.util.List;
@@ -22,8 +23,6 @@ public class FoodServiceImpl implements FoodService
     private FoodMapper foodMapper;
     private RestTemplate restTemplate;
 
-    @Value("arduino.host")
-    private String arduinoHost;
     @Value("arduino.food.path")
     private String arduinoFoodPath;
 
@@ -48,7 +47,7 @@ public class FoodServiceImpl implements FoodService
 
 
     @Override
-    public FoodResponseDto getFood(String id)
+    public FoodResponseDto getFood(Long id)
     {
         Food food = foodRepository.findById(id).get();
         return foodMapper.foodToFoodResponseDTO(food);
@@ -75,22 +74,18 @@ public class FoodServiceImpl implements FoodService
         return foodResponseDtos;
     }
 
+    public String foodOn(User user) { return invokeFoodService(user, "on"); }
 
-    public String foodOn()
+
+    public String foodOff(User user)
     {
-        return invokeFoodService("on");
+        return invokeFoodService(user, "off");
     }
 
 
-    public String foodOff()
+    private String invokeFoodService(User user, String status)
     {
-        return invokeFoodService("off");
-    }
-
-
-    private String invokeFoodService(String status)
-    {
-        String url = "http:://" + arduinoHost + "/" + arduinoFoodPath + "/" + status;
+        String url = "http:://" + user.getArduinoHost() + ":" + user.getArduinoPort() + "/" + arduinoFoodPath + "/" + status;
         String result = restTemplate.postForObject(url, null, String.class);
         return result;
     }
