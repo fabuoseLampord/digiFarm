@@ -4,7 +4,7 @@ import digifarmfoodservice.dto.FoodRequestDto;
 import digifarmfoodservice.dto.FoodResponseDto;
 import digifarmfoodservice.entities.User;
 import digifarmfoodservice.services.FoodService;
-import digifarmfoodservice.services.UserService;
+import digifarmfoodservice.services.UserDetailsServiceImpl;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class FoodController
 {
     private FoodService foodService;
-    private UserService userService;
+    private UserDetailsServiceImpl userService;
 
 
-    public FoodController(FoodService foodService, UserService userService)
+    public FoodController(FoodService foodService, UserDetailsServiceImpl userService)
     {
         this.foodService = foodService;
         this.userService = userService;

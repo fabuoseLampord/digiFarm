@@ -1,5 +1,7 @@
 package digifarmfoodservice.web;
 
+import digifarmfoodservice.entities.User;
+import digifarmfoodservice.exception.ConstraintsViolationException;
 import digifarmfoodservice.exception.UnauthorizedException;
 import digifarmfoodservice.services.UserDetailsServiceImpl;
 import digifarmfoodservice.util.JwtTokenUtil;
@@ -66,6 +68,16 @@ public class AuthenticationController
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok("Bearer " + token);
+    }
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<User> signup(@RequestParam String username, @RequestParam String password) throws ConstraintsViolationException
+    {
+
+        User user = userDetailsService.create(username, password);
+
+        return ResponseEntity.ok(user);
     }
 
 
