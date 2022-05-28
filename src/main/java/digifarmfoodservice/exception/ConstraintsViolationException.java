@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * The type Constraints violation exception.
  */
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some constraints are violated ...")
+@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Some constraints are violated ...")
 public class ConstraintsViolationException extends Exception
 {
 

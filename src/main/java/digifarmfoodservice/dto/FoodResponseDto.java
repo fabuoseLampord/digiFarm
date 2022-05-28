@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoodResponseDto {
-    private String id;
+    private Long id;
     private String name;
     private String description;
    // private Date date;
